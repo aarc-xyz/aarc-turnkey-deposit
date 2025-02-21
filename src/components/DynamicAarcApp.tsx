@@ -1,21 +1,26 @@
 import { DynamicWidget, useDynamicContext, useIsLoggedIn } from "@dynamic-labs/sdk-react-core";
-import { useAarc } from '../context/AarcProvider';
+import { AarcFundKitModal } from "@aarc-xyz/fundkit-web-sdk";
 
 interface Props {
     isDark: boolean;
     logoLight: string;
     logoDark: string;
+    aarcModal: AarcFundKitModal;
 }
 
-const DynamicAarcApp = ({ isDark, logoLight, logoDark } : Props) => {
+const DynamicAarcApp = ({ isDark, logoLight, logoDark, aarcModal }: Props) => {
     const isLoggedIn = useIsLoggedIn();
     const { primaryWallet } = useDynamicContext();
-    const { openFundingModal } = useAarc();
 
     const handleFundWallet = () => {
         if (primaryWallet?.address) {
             console.log('primaryWallet?.address: ', primaryWallet?.address);
-            openFundingModal(primaryWallet.address);
+            try {
+                aarcModal?.updateDestinationWalletAddress(primaryWallet?.address);
+                aarcModal.openModal();
+            } catch (error) {
+                console.error('Error opening Aarc modal:', error);
+            }
         }
     };
 

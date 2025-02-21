@@ -5,16 +5,8 @@ import {
     TransactionErrorData,
     SourceConnectorName
 } from "@aarc-xyz/fundkit-web-sdk";
-import { AarcConfig } from '../types/aarc';
 
-export const createAarcConfig = ({
-    walletAddress,
-    customerId,
-    onSuccess,
-    onError,
-    onClose,
-    onOpen
-}: AarcConfig): FKConfig => ({
+export const aarcConfig: FKConfig = {
     appName: "Dynamic x Aarc",
     module: {
         exchange: {
@@ -22,9 +14,7 @@ export const createAarcConfig = ({
         },
         onRamp: {
             enabled: true,
-            onRampConfig: {
-                customerId: customerId || "anonymous",
-            },
+            onRampConfig: {},
         },
         bridgeAndSwap: {
             enabled: true,
@@ -33,9 +23,7 @@ export const createAarcConfig = ({
             connectors: [SourceConnectorName.ETHEREUM],
         },
     },
-    destination: {
-        walletAddress,
-    },
+    destination: {},
     appearance: {
         roundness: 42,
         theme: ThemeName.DARK,
@@ -46,20 +34,16 @@ export const createAarcConfig = ({
     events: {
         onTransactionSuccess: (data: TransactionSuccessData) => {
             console.log("Transaction successful:", data);
-            onSuccess?.(data);
         },
         onTransactionError: (data: TransactionErrorData) => {
             console.error("Transaction failed:", data);
-            onError?.(data);
         },
         onWidgetClose: () => {
             console.log("Widget closed");
-            onClose?.();
         },
         onWidgetOpen: () => {
             console.log("Widget opened");
-            onOpen?.();
         },
     },
     origin: window.location.origin,
-});
+};

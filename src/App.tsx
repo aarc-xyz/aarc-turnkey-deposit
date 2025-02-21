@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core";
 import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
 import { AarcProvider } from './context/AarcProvider';
 import DynamicAarcApp from './components/DynamicAarcApp';
+import "@aarc-xyz/eth-connector/styles.css"
 import './App.css';
+import { AarcFundKitModal } from '@aarc-xyz/fundkit-web-sdk';
+import { aarcConfig } from './config/aarcConfig';
 
+declare global {
+  interface Window {
+    __VUE__: boolean;
+  }
+}
+
+window.__VUE__ = true;
 
 const App = () => {
+  const aarcModalRef = useRef(new AarcFundKitModal(aarcConfig));
+  const aarcModal = aarcModalRef.current;
+
+
   return (
     <React.StrictMode>
       <DynamicContextProvider
@@ -16,11 +30,12 @@ const App = () => {
           walletConnectors: [EthereumWalletConnectors],
         }}
       >
-        <AarcProvider>
+        <AarcProvider aarcModal={aarcModal}>
           <DynamicAarcApp
             isDark={true}
             logoLight="/logo.png"
             logoDark="/logo.png"
+            aarcModal={aarcModal}
           />
         </AarcProvider>
       </DynamicContextProvider>
