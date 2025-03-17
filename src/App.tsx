@@ -36,6 +36,7 @@ const App = () => {
             logoLight="/logo.png"
             logoDark="/logo.png"
             aarcModal={aarcModal}
+            onThemeToggle={() => {}}
           />
         </AarcProvider>
       </DynamicContextProvider>
