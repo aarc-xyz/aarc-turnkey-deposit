@@ -1,3 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  body {
+    @apply bg-aarc-bg text-white antialiased;
+  }
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -5,7 +21,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #2D2D2D;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,19 +31,12 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #A5E547;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
@@ -35,23 +44,59 @@ h1 {
   line-height: 1.1;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+/* Custom Button Class for Login/Signup */
+.login-signup-button {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 16px;
+  gap: 4px;
+  width: 392px;
+  height: 44px;
+  background: #A5E547;
+  border: 1px solid rgba(0, 51, 0, 0.05);
+  border-radius: 16px;
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: #003300;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.2s ease;
 }
-button:hover {
-  border-color: #646cff;
+
+.login-signup-button:hover {
+  background: #B5F557;
+  border-color: rgba(0, 51, 0, 0.08);
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+
+.login-signup-button:active {
+  transform: scale(0.98);
+}
+
+.login-signup-button .placeholder-icon,
+.login-signup-button .chevron-right-icon,
+.login-signup-button .arrow-narrow-icon {
+  display: none;
+  width: 20px;
+  height: 20px;
+}
+
+.login-signup-button .arrow-narrow-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.login-signup-button .text-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 2px;
+  height: 20px;
 }
 
 @media (prefers-color-scheme: light) {
@@ -59,10 +104,155 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
+}
+/* Grid Background */
+.grid-background {
+  background-image:
+    linear-gradient(to right, #ffffff0d 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 96px 96px;
+}
+
+/* Gradient Border */
+.gradient-border {
+  width: 100%;
+  min-width: 440px;
+  min-height: 160px;
+  background: #2D2D2D;
+  border-radius: 24px;
+  padding: 2rem 1.5rem 1.375rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  left: -1px;
+  padding: 1px;
+  border-radius: 24px;
+  background: linear-gradient(145.73deg, rgba(165, 229, 71, 0.3) 0%, rgba(128, 26, 229, 0.3) 20%, rgba(165, 229, 71, 0.3) 80%, rgba(128, 26, 229, 0.3) 100%);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.gradient-border {
+  box-shadow: 4px 8px 8px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Login/Signup Button Specific Styles */
+.gradient-border .login-signup-button {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+    padding: 10px 16px;
+    gap: 4px;
+    width: 392px;
+    height: 44px;
+    background: #A5E547;
+    border: 1px solid rgba(0, 51, 0, 0.05);
+    border-radius: 16px;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #003300;
+    cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gradient-border .login-signup-button:hover {
+  background: #B5F557;
+  border-color: rgba(0, 51, 0, 0.08);
+}
+
+.gradient-border .login-signup-button:active {
+  transform: scale(0.98);
+}
+
+.gradient-border .login-signup-button .placeholder-icon,
+.gradient-border .login-signup-button .chevron-right-icon,
+.gradient-border .login-signup-button .arrow-narrow-icon {
+  display: none;
+  width: 20px;
+  height: 20px;
+}
+
+.gradient-border .login-signup-button .arrow-narrow-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.gradient-border .login-signup-button .text-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 2px;
+  height: 20px;
+}
+
+/* Dynamic Widget Inline Controls Styling */
+.dynamic-widget__container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+  gap: 10px;
+  width: 392px;
+  height: 62px;
+  background: #313131;
+  border: 1px solid rgba(0, 51, 0, 0.04);
+  border-radius: 8px;
+  position: relative;
+    overflow: hidden;
+}
+
+.dynamic-widget__container>div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0;
+  background-color: transparent;
+}
+
+.dynamic-widget__container .wallet-icon-with-network__container {
+  display: none;
+}
+
+
+.dynamic-widget__container .user-profile-social-account__connected-avatar {
+  display: none;
+}
+
+.dynamic-widget__container .account-control__icon {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #424242;
+  border-radius: 8px;
+  padding: 4px;
 }
