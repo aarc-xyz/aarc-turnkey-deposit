@@ -12,7 +12,7 @@ interface Props {
 
 const DynamicAarcApp = ({ isDark, logoLight, logoDark, aarcModal, onThemeToggle }: Props) => {
     const isLoggedIn = useIsLoggedIn();
-    const { primaryWallet } = useDynamicContext();
+    const { primaryWallet, setShowAuthFlow } = useDynamicContext();
 
     const handleFundWallet = () => {
         if (primaryWallet?.address) {
@@ -58,15 +58,18 @@ const DynamicAarcApp = ({ isDark, logoLight, logoDark, aarcModal, onThemeToggle 
 
             <main className="pt-24 pb-8 px-4 mx-auto max-w-md">
                 <div className="gradient-border">
-                    <DynamicWidget
-                        buttonClassName=""
-                        buttonContainerClassName="w-full"
-
-                    />
 
                     {!isLoggedIn && (
                         <>
-                            <div className="mt-6 flex items-center justify-center space-x-0.5 text-aarc-text">
+                            <button className="login-signup-button" onClick={() => setShowAuthFlow(true)}>
+                                <div className="placeholder-icon" />
+                                <div className="text-container">
+                                    <span>Login or Signup</span>
+                                </div>
+                                <div className="chevron-right-icon" />
+                                <div className="arrow-narrow-icon" />
+                            </button>
+                            <div className="mt-2 flex items-center justify-center space-x-0.5 text-aarc-text">
                                 <span className="font-semibold text-[10.94px] leading-none">Powered by</span>
                                 <img
                                     src={isDark ? logoLight : logoDark}
@@ -74,20 +77,21 @@ const DynamicAarcApp = ({ isDark, logoLight, logoDark, aarcModal, onThemeToggle 
                                     className="w-[56.11px] h-[14.90px]"
                                 />
                             </div>
-                            <div className="mt-4 text-center text-[10px] leading-none text-aarc-text">
+                            <div className="text-center text-[10px] leading-none text-aarc-text">
                                 By using this service, you agree to Aarc <span className="underline">terms</span>
                             </div>
                         </>
                     )}
                     {isLoggedIn && primaryWallet && (
                         <>
+                            <DynamicWidget />
                             <button
                                 onClick={handleFundWallet}
                                 className="w-full mt-4 py-3 px-4 bg-aarc-primary text-aarc-button-text font-medium rounded-[42px] hover:bg-opacity-90 transition-colors"
                             >
                                 Fund Wallet
                             </button>
-                            <div className="mt-6 flex items-center justify-center space-x-0.5 text-aarc-text">
+                            <div className="mt-4 flex items-center justify-center space-x-0.5 text-aarc-text">
                                 <span className="font-semibold text-[10.94px] leading-none">Powered by</span>
                                 <img
                                     src={isDark ? logoLight : logoDark}
@@ -95,8 +99,8 @@ const DynamicAarcApp = ({ isDark, logoLight, logoDark, aarcModal, onThemeToggle 
                                     className="w-[56.11px] h-[14.90px]"
                                 />
                             </div>
-                            <div className="mt-4 text-center text-[10px] leading-none text-aarc-text">
-                                <span className="underline">By using this service, you agree to Aarc terms</span>
+                            <div className="text-center text-[10px] leading-none text-aarc-text">
+                                By using this service, you agree to Aarc <span className="underline">terms</span>
                             </div>
                         </>
                     )}

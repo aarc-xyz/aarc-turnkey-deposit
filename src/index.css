@@ -14,6 +14,105 @@
   }
 }
 
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #2D2D2D;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #A5E547;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+/* Custom Button Class for Login/Signup */
+.login-signup-button {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 16px;
+  gap: 4px;
+  width: 392px;
+  height: 44px;
+  background: #A5E547;
+  border: 1px solid rgba(0, 51, 0, 0.05);
+  border-radius: 16px;
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  color: #003300;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.login-signup-button:hover {
+  background: #B5F557;
+  border-color: rgba(0, 51, 0, 0.08);
+}
+
+.login-signup-button:active {
+  transform: scale(0.98);
+}
+
+.login-signup-button .placeholder-icon,
+.login-signup-button .chevron-right-icon,
+.login-signup-button .arrow-narrow-icon {
+  display: none;
+  width: 20px;
+  height: 20px;
+}
+
+.login-signup-button .arrow-narrow-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.login-signup-button .text-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 2px;
+  height: 20px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+
+  a:hover {
+    color: #747bff;
+  }
+
+  button {
+    background-color: #f9f9f9;
+  }
+}
 /* Grid Background */
 .grid-background {
   background-image:
@@ -60,96 +159,100 @@
   box-shadow: 4px 8px 8px 4px rgba(0, 0, 0, 0.1);
 }
 
-.dynamic-shadow-dom,
-.dynamic-widget__container {
-  width: 100%;
-  height: 62px;
-  gap: 10px;
-  border-radius: 8px;
-  border-width: 1px;
-  background: #313131;
-  border: 1px solid #0033000A;
+/* Login/Signup Button Specific Styles */
+.gradient-border .login-signup-button {
+  box-sizing: border-box;
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
-  padding: 0 16px;
+  align-items: center;
+    padding: 10px 16px;
+    gap: 4px;
+    width: 392px;
+    height: 44px;
+    background: #A5E547;
+    border: 1px solid rgba(0, 51, 0, 0.05);
+    border-radius: 16px;
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #003300;
+    cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.dynamic-shadow-dom:hover,
-.dynamic-widget__container:hover {
-  background: #3A3A3A;
-  border-color: #0044000A;
+.gradient-border .login-signup-button:hover {
+  background: #B5F557;
+  border-color: rgba(0, 51, 0, 0.08);
 }
 
-.dynamic-shadow-dom:active,
-.dynamic-widget__container:active {
+.gradient-border .login-signup-button:active {
   transform: scale(0.98);
 }
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #2D2D2D;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.gradient-border .login-signup-button .placeholder-icon,
+.gradient-border .login-signup-button .chevron-right-icon,
+.gradient-border .login-signup-button .arrow-narrow-icon {
+  display: none;
+  width: 20px;
+  height: 20px;
 }
 
-a {
-  font-weight: 500;
-  color: #A5E547;
-  text-decoration: inherit;
+.gradient-border .login-signup-button .arrow-narrow-icon {
+  width: 16px;
+  height: 16px;
 }
 
-a:hover {
-  color: #535bf2;
+.gradient-border .login-signup-button .text-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 2px;
+  height: 20px;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
+/* Dynamic Widget Inline Controls Styling */
+.dynamic-widget__container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+  gap: 10px;
+  width: 392px;
+  height: 62px;
+  background: #313131;
+  border: 1px solid rgba(0, 51, 0, 0.04);
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  color: #003300;
-  cursor: pointer;
-  transition: border-color 0.25s;
+  position: relative;
+    overflow: hidden;
 }
 
-button:hover {
-  border-color: #A5E547;
+.dynamic-widget__container>div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0;
+  background-color: transparent;
 }
 
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.dynamic-widget__container .wallet-icon-with-network__container {
+  display: none;
 }
 
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
+.dynamic-widget__container .user-profile-social-account__connected-avatar {
+  display: none;
+}
 
-  a:hover {
-    color: #747bff;
-  }
-
-  button {
-    background-color: #f9f9f9;
-  }
+.dynamic-widget__container .account-control__icon {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #424242;
+  border-radius: 8px;
+  padding: 4px;
 }

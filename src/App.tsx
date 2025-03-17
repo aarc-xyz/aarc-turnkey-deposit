@@ -28,6 +28,7 @@ const App = () => {
         settings={{
           environmentId: import.meta.env.VITE_DYNAMIC_ENVIRONMENT_ID,
           walletConnectors: [EthereumWalletConnectors],
+          shadowDOMEnabled: false,
         }}
       >
         <AarcProvider aarcModal={aarcModal}>
