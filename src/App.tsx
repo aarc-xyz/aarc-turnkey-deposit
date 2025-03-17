@@ -4,7 +4,7 @@ import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
 import { AarcProvider } from './context/AarcProvider';
 import DynamicAarcApp from './components/DynamicAarcApp';
 import "@aarc-xyz/eth-connector/styles.css"
-import './App.css';
+import './index.css';
 import { AarcFundKitModal } from '@aarc-xyz/fundkit-web-sdk';
 import { aarcConfig } from './config/aarcConfig';
 
@@ -33,8 +33,8 @@ const App = () => {
         <AarcProvider aarcModal={aarcModal}>
           <DynamicAarcApp
             isDark={true}
-            logoLight="/logo.png"
-            logoDark="/logo.png"
+            logoLight="/logo.svg"
+            logoDark="/logo.svg"
             aarcModal={aarcModal}
             onThemeToggle={() => {}}
           />
