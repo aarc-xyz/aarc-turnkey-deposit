@@ -10,7 +10,7 @@ interface Props {
     onThemeToggle: () => void;
 }
 
-const DynamicAarcApp = ({ isDark, logoLight, logoDark, aarcModal, onThemeToggle }: Props) => {
+const DynamicAarcApp = ({ isDark, logoLight, logoDark, aarcModal }: Props) => {
     const isLoggedIn = useIsLoggedIn();
     const { primaryWallet, setShowAuthFlow } = useDynamicContext();
 
@@ -47,12 +47,12 @@ const DynamicAarcApp = ({ isDark, logoLight, logoDark, aarcModal, onThemeToggle 
                             alt="Dynamic Logo"
                         />
                     </div>
-                    <div
+                    {/* <div
                         onClick={onThemeToggle}
                         className="w-10 h-10"
                     >
                         <img src="/dark_mode.svg" alt="Theme toggle" />
-                    </div>
+                    </div> */}
                 </div>
             </header>
 
