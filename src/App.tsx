@@ -8,14 +8,6 @@ import './index.css';
 import { AarcFundKitModal } from '@aarc-xyz/fundkit-web-sdk';
 import { aarcConfig } from './config/aarcConfig';
 
-declare global {
-  interface Window {
-    __VUE__: boolean;
-  }
-}
-
-window.__VUE__ = true;
-
 const App = () => {
   const aarcModalRef = useRef(new AarcFundKitModal(aarcConfig));
   const aarcModal = aarcModalRef.current;
@@ -28,7 +20,6 @@ const App = () => {
         settings={{
           environmentId: import.meta.env.VITE_DYNAMIC_ENVIRONMENT_ID,
           walletConnectors: [EthereumWalletConnectors],
-          shadowDOMEnabled: false,
         }}
       >
         <AarcProvider aarcModal={aarcModal}>

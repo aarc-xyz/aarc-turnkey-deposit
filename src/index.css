@@ -214,45 +214,14 @@ h1 {
   height: 20px;
 }
 
-/* Dynamic Widget Inline Controls Styling */
-.dynamic-widget__container {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0;
-  gap: 10px;
-  width: 392px;
-  height: 62px;
-  background: #313131;
-  border: 1px solid rgba(0, 51, 0, 0.04);
-  border-radius: 8px;
-  position: relative;
-    overflow: hidden;
+iframe {
+  background-color: transparent !important;
+  background: transparent !important;
 }
 
-.dynamic-widget__container>div {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0;
-  background-color: transparent;
-}
-
-.dynamic-widget__container .wallet-icon-with-network__container {
-  display: none;
-}
-
-
-.dynamic-widget__container .user-profile-social-account__connected-avatar {
-  display: none;
-}
-
-.dynamic-widget__container .account-control__icon {
-  width: 24px;
-  height: 24px;
-  border: 1px solid #424242;
-  border-radius: 8px;
-  padding: 4px;
+#iframe {
+  background-color: transparent !important;
+  background: transparent !important;
+  border: 0;
+  color-scheme: normal;
 }
