@@ -214,14 +214,16 @@ h1 {
   height: 20px;
 }
 
+/* Make iframes transparent */
 iframe {
   background-color: transparent !important;
   background: transparent !important;
+  border: 0;
+    color-scheme: normal;
 }
 
-#iframe {
+/* Make the background color of the page transparent */
+body {
   background-color: transparent !important;
   background: transparent !important;
-  border: 0;
-  color-scheme: normal;
 }
