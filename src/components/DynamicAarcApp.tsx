@@ -1,5 +1,7 @@
 import { DynamicWidget, useDynamicContext, useIsLoggedIn } from "@dynamic-labs/sdk-react-core";
 import { AarcFundKitModal } from "@aarc-xyz/fundkit-web-sdk";
+import { useEffect } from "react";
+import { setupAarcButtonOverride } from "../utils/aarcButtonOverride";
 import "../index.css";
 
 interface Props {
@@ -12,13 +14,20 @@ interface Props {
 
 const DynamicAarcApp = ({ isDark, logoLight, logoDark, aarcModal }: Props) => {
     const isLoggedIn = useIsLoggedIn();
-    const { primaryWallet, setShowAuthFlow } = useDynamicContext();
+    const { primaryWallet, setShowAuthFlow, } = useDynamicContext();
+
+    useEffect(() => {
+        if (aarcModal && primaryWallet?.address) {
+            const cleanup = setupAarcButtonOverride(aarcModal, primaryWallet.address, { debug: true });
+            return cleanup;
+        }
+    }, [aarcModal, primaryWallet?.address]);
 
     const handleFundWallet = () => {
         if (primaryWallet?.address) {
             console.log('primaryWallet?.address: ', primaryWallet?.address);
             try {
-                aarcModal?.updateDestinationWalletAddress(primaryWallet?.address);
+                aarcModal?.updateDestinationWalletAddress(primaryWallet.address);
                 aarcModal.openModal();
             } catch (error) {
                 console.error('Error opening Aarc modal:', error);

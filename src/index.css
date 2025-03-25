@@ -219,9 +219,12 @@ iframe {
   background-color: transparent !important;
   background: transparent !important;
   border: 0;
-    color-scheme: normal;
+  color-scheme: normal;
 }
 
+#aarc-widget-modal {
+  z-index: 999999 !important;
+}
 /* Make the background color of the page transparent */
 body {
   background-color: transparent !important;
