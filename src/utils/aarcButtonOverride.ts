@@ -1,16 +1,8 @@
 import { AarcFundKitModal } from "@aarc-xyz/fundkit-web-sdk";
 
-let isSetupInitiated = false;
+let currentInterval: ReturnType<typeof setInterval> | null = null;
 
 export const setupAarcButtonOverride = (aarcModal: AarcFundKitModal, dynamicAddress: string, options = { debug: false }) => {
-    // Stop if it already ran
-    if (isSetupInitiated) {
-        return;
-    }
-
-    // Set our flag to say the function has initiated
-    isSetupInitiated = true;
-
     const { debug = false } = options;
 
     // Function to find elements in shadow DOM
@@ -52,54 +44,67 @@ export const setupAarcButtonOverride = (aarcModal: AarcFundKitModal, dynamicAddr
     const setupOverride = () => {
         const { button, backdrop } = findButtonInShadowDOM(document);
 
-        if (button && aarcModal) {
-            if (debug) console.log('Found deposit button and Aarc modal ready');
+        if (button) {
+            if (debug) console.log('Found buy crypto button');
 
-            // Remove disabled state if present
+            // Always enable the button
             button.classList.remove('disabled');
             button.removeAttribute('disabled');
+            button.style.pointerEvents = 'auto';
+            button.style.opacity = '1';
 
-            // Remove all existing click handlers
-            const newButton = button.cloneNode(true) as HTMLElement;
-            button.parentNode?.replaceChild(newButton, button);
+            // Only add click handler if it hasn't been added yet
+            if (!button.hasAttribute('data-aarc-override')) {
+                // Mark this button as overridden
+                button.setAttribute('data-aarc-override', 'true');
 
-            // Add our new click handler
-            newButton.addEventListener('click', (event: MouseEvent) => {
-                event.preventDefault();
-                event.stopPropagation();
+                // Create new button with our handler
+                const newButton = button.cloneNode(true) as HTMLElement;
+                newButton.setAttribute('data-aarc-override', 'true');
+                newButton.classList.remove('disabled');
+                newButton.removeAttribute('disabled');
+                newButton.style.pointerEvents = 'auto';
+                newButton.style.opacity = '1';
 
-                if (debug) console.log('Opening Aarc modal');
-                // First close the Dynamic widget using the backdrop
-                if (backdrop) {
-                    backdrop.click();
-                }
-                aarcModal?.updateDestinationWalletAddress(dynamicAddress);
-                // Small delay to ensure the Dynamic modal is closed
-                setTimeout(() => {
-                    aarcModal.openModal();
-                }, 100);
-            });
+                // Add our new click handler
+                const handleClick = (event: MouseEvent) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    event.stopImmediatePropagation();
 
-            return true;
-        }
+                    if (debug) console.log('Opening Aarc modal');
+                    // First close the Dynamic widget using the backdrop
+                    if (backdrop) {
+                        backdrop.click();
+                    }
+                    aarcModal?.updateDestinationWalletAddress(dynamicAddress);
+                    // Small delay to ensure the Dynamic modal is closed
+                    setTimeout(() => {
+                        aarcModal.openModal();
+                    }, 100);
+                };
 
-        return false;
-    };
-
-    // Poll for the button
-    const startTime = Date.now();
-    const checkInterval = setInterval(() => {
-        if (setupOverride() || Date.now() - startTime > 30000) {
-            clearInterval(checkInterval);
-            if (Date.now() - startTime > 30000) {
-                if (debug) console.warn('Timeout reached while setting up Aarc button override');
+                newButton.addEventListener('click', handleClick, true);
+                button.parentNode?.replaceChild(newButton, button);
             }
         }
-    }, 500);
+    };
+
+    // Clear existing interval if any
+    if (currentInterval) {
+        clearInterval(currentInterval);
+    }
+
+    // Continuously poll to maintain the override
+    currentInterval = setInterval(() => {
+        setupOverride();
+    }, 100); // Check frequently to catch any changes
 
     // Return cleanup function
     return () => {
-        clearInterval(checkInterval);
-        isSetupInitiated = false;
+        if (currentInterval) {
+            clearInterval(currentInterval);
+            currentInterval = null;
+        }
     };
 }; 
