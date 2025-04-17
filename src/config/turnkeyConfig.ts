@@ -10,14 +10,10 @@ export const auth = {
         phoneEnabled: false,
         appleEnabled: false,
         facebookEnabled: false,
-        googleEnabled: false,
+        googleEnabled: true,
         walletEnabled: false,
     },
-    configOrder: ["email"],
-    onAuthSuccess: async () => {
-        console.log('Auth successful');
-        return Promise.resolve();
-    },
+    configOrder: ["email", "google"],
     onError: (error: any) => {
         console.error('Auth error:', error);
     },
