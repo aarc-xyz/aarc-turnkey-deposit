@@ -44,7 +44,7 @@ const TurnkeyAarcApp = ({ isDark, logoLight, logoDark, aarcModal }: Props) => {
                         />
                         <img
                             className="h-6 w-auto"
-                            src="/turnkeylogo.ico"
+                            src="/turnkeyLogo.svg"
                             alt="Turnkey Logo"
                         />
                     </div>

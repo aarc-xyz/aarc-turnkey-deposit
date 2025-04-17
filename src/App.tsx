@@ -23,8 +23,8 @@ const App = () => {
         <AarcProvider aarcModal={aarcModal}>
           <TurnkeyAarcApp
             isDark={true}
-            logoLight="/logo.ico"
-            logoDark="/logo.ico"
+            logoLight="/logo.svg"
+            logoDark="/logo.svg"
             aarcModal={aarcModal}
             onThemeToggle={() => { }}
           />
