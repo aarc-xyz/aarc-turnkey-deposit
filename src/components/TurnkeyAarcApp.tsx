@@ -25,35 +25,59 @@ const TurnkeyAarcApp = ({ isDark, logoLight, logoDark, aarcModal }: Props) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [copied, setCopied] = useState(false);
     const [userAddress, setUserAddress] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        (async()=>{
-            const user =  await turnkey?.getCurrentUser();
-            setIsLoggedIn(!!user?.organization.organizationId);
-            const client = await getActiveClient();
-            // The user's sub-organization id
-            const organizationId = user?.organization.organizationId;
-        
-            // Get the user's wallets
-            const wallets = await client?.getWallets({
-              organizationId,
-            });
-        
-            // Get the first wallet of the user
-            const walletId = wallets?.wallets[0].walletId ?? "";
-        
-            // Use the `walletId` to get the accounts associated with the wallet
-            const accounts = await client?.getWalletAccounts({
-              organizationId,
-              walletId,
-            });
-        
-            console.log('accounts: ', accounts);
-            const userAddress = accounts?.accounts.find(account => account.addressFormat === "ADDRESS_FORMAT_ETHEREUM")?.address ?? "";
-            console.log('userAddress: ', userAddress);
-            setUserAddress(userAddress);    
-        })()
-    }, [turnkey]);
+        let isMounted = true;
+
+        const fetchUserData = async () => {
+            try {
+                setIsLoading(true);
+                const user = await turnkey?.getCurrentUser();
+                const isUserLoggedIn = !!user?.organization.organizationId;
+                setIsLoggedIn(isUserLoggedIn);
+
+                if (isUserLoggedIn) {
+                    const client = await getActiveClient();
+                    const organizationId = user?.organization.organizationId;
+                    
+                    if (organizationId) {
+                        const wallets = await client?.getWallets({
+                            organizationId,
+                        });
+                        
+                        if (wallets?.wallets && wallets.wallets.length > 0) {
+                            const walletId = wallets.wallets[0].walletId;
+                            const accounts = await client?.getWalletAccounts({
+                                organizationId,
+                                walletId,
+                            });
+                            
+                            const ethAddress = accounts?.accounts.find(
+                                account => account.addressFormat === "ADDRESS_FORMAT_ETHEREUM"
+                            )?.address;
+                            
+                            if (isMounted && ethAddress) {
+                                setUserAddress(ethAddress);
+                            }
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            } finally {
+                if (isMounted) {
+                    setIsLoading(false);
+                }
+            }
+        };
+
+        fetchUserData();
+
+        return () => {
+            isMounted = false;
+        };
+    }, [turnkey, getActiveClient, isLoggedIn]);
     
     const handleDisconnect = () => {
         localStorage.removeItem('@turnkey/session/v2');
@@ -62,7 +86,7 @@ const TurnkeyAarcApp = ({ isDark, logoLight, logoDark, aarcModal }: Props) => {
     };
 
     const handleCopyAddress = async () => {
-        if (!userAddress) {
+        if (userAddress) {
             await navigator.clipboard.writeText(userAddress);
             setCopied(true);
             setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
@@ -122,38 +146,42 @@ const TurnkeyAarcApp = ({ isDark, logoLight, logoDark, aarcModal }: Props) => {
 
             <main className="pt-24 pb-8 px-4 mx-auto max-w-md">
                 <div className="gradient-border">
-
-                    {!isLoggedIn ?(
-                            <Auth 
+                    {isLoading ? (
+                        <div className="flex items-center justify-center py-8">
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-aarc-primary"></div>
+                        </div>
+                    ) : !isLoggedIn ? (
+                        <Auth 
                             {...auth}
                             onAuthSuccess={() => {
-                                setIsLoggedIn(true)
-                                return Promise.resolve()
+                                setIsLoggedIn(true);
+                                return Promise.resolve();
                             }}
-                             />
-                    ): (
-                        <div className="box-border flex w-full items-center  px-2 py-3 gap-2.5 border border-[#424242] rounded-2xl flex-grow-0 z-[5]">
-                        <img src="/turnkeyFavicon.ico" alt="Ethereum" className="w-6 h-6" />
-                        <div className="flex flex-col items-start center gap-2">
-                            <div className="text-[#C3C3C3] text-xs font-medium">EVM Address</div>
-                            <div className="text-white text-sm font-semibold">{formatAddress(userAddress)}</div>
-                        </div>
-                        <button
-                            onClick={handleCopyAddress}
-                            className="ml-auto hover:opacity-80 transition-opacity"
-                            title={copied ? "Copied!" : "Copy address"}
-                        >
-                            {copied ? <CheckIcon /> : <CopyIcon />}
-                        </button>
-                    </div>
-                    )}
-                    {isLoggedIn && (
+                        />
+                    ) : (
+                        <>
+                            <div className="box-border flex w-full items-center px-2 py-3 gap-2.5 border border-[#424242] rounded-2xl flex-grow-0 z-[5]">
+                                <img src="/turnkeyFavicon.ico" alt="Ethereum" className="w-6 h-6" />
+                                <div className="flex flex-col items-start center gap-2">
+                                    <div className="text-[#C3C3C3] text-xs font-medium">EVM Address</div>
+                                    <div className="text-white text-sm font-semibold">{formatAddress(userAddress)}</div>
+                                </div>
+                                <button
+                                    onClick={handleCopyAddress}
+                                    className="ml-auto hover:opacity-80 transition-opacity"
+                                    title={copied ? "Copied!" : "Copy address"}
+                                >
+                                    {copied ? <CheckIcon /> : <CopyIcon />}
+                                </button>
+                            </div>
+
                             <button
                                 onClick={handleFundWallet}
                                 className="w-full mt-4 py-3 px-4 bg-aarc-primary text-aarc-button-text font-medium rounded-[42px] hover:bg-opacity-90 transition-colors"
                             >
                                 Fund Wallet
                             </button>
+                        </>
                     )}
                        <div className="mt-4 flex items-center justify-center space-x-0.5 text-aarc-text">
                                 <span className="font-semibold text-[10.94px] leading-none">Powered by</span>
