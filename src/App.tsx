@@ -1,12 +1,14 @@
 import React, { useRef } from 'react';
-import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core";
-import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
 import { AarcProvider } from './context/AarcProvider';
-import DynamicAarcApp from './components/DynamicAarcApp';
+import TurnkeyAarcApp from './components/TurnkeyAarcApp';
 import "@aarc-xyz/eth-connector/styles.css"
 import './index.css';
 import { AarcFundKitModal } from '@aarc-xyz/fundkit-web-sdk';
 import { aarcConfig } from './config/aarcConfig';
+/* @ts-ignore */
+import "@turnkey/sdk-react/styles";
+import { TurnkeyProvider } from '@turnkey/sdk-react';
+import { turnKeyConfig } from './config/turnkeyConfig';
 
 const App = () => {
   const aarcModalRef = useRef(new AarcFundKitModal(aarcConfig));
@@ -15,23 +17,19 @@ const App = () => {
 
   return (
     <React.StrictMode>
-      <DynamicContextProvider
-      theme="auto"
-        settings={{
-          environmentId: import.meta.env.VITE_DYNAMIC_ENVIRONMENT_ID,
-          walletConnectors: [EthereumWalletConnectors],
-        }}
+      <TurnkeyProvider
+        config={turnKeyConfig}
       >
         <AarcProvider aarcModal={aarcModal}>
-          <DynamicAarcApp
+          <TurnkeyAarcApp
             isDark={true}
-            logoLight="/logo.svg"
-            logoDark="/logo.svg"
+            logoLight="/logo.ico"
+            logoDark="/logo.ico"
             aarcModal={aarcModal}
-            onThemeToggle={() => {}}
+            onThemeToggle={() => { }}
           />
         </AarcProvider>
-      </DynamicContextProvider>
+      </TurnkeyProvider >
     </React.StrictMode>
   );
 };

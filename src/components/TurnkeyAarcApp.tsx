@@ -1,8 +1,7 @@
-import { DynamicWidget, useDynamicContext, useIsLoggedIn } from "@dynamic-labs/sdk-react-core";
 import { AarcFundKitModal } from "@aarc-xyz/fundkit-web-sdk";
-import { useEffect } from "react";
-import { setupAarcButtonOverride } from "../utils/aarcButtonOverride";
 import "../index.css";
+import { Auth, useTurnkey } from "@turnkey/sdk-react";
+import { auth } from "../config/turnkeyConfig";
 
 interface Props {
     isDark: boolean;
@@ -12,22 +11,15 @@ interface Props {
     onThemeToggle: () => void;
 }
 
-const DynamicAarcApp = ({ isDark, logoLight, logoDark, aarcModal }: Props) => {
-    const isLoggedIn = useIsLoggedIn();
-    const { primaryWallet, setShowAuthFlow, } = useDynamicContext();
-
-    useEffect(() => {
-        if (aarcModal && primaryWallet?.address) {
-            const cleanup = setupAarcButtonOverride(aarcModal, primaryWallet.address, { debug: true });
-            return cleanup;
-        }
-    }, [aarcModal, primaryWallet?.address]);
+const TurnkeyAarcApp = ({ isDark, logoLight, logoDark, aarcModal }: Props) => {
+    const { turnkey } = useTurnkey();
+    console.log('turnkey: ', turnkey?.getCurrentUser());
+    const isLoggedIn = false;
 
     const handleFundWallet = () => {
-        if (primaryWallet?.address) {
-            console.log('primaryWallet?.address: ', primaryWallet?.address);
+        if (turnkey?.getCurrentUser()) {
             try {
-                aarcModal?.updateDestinationWalletAddress(primaryWallet.address);
+                // aarcModal?.updateDestinationWalletAddress(primaryWallet.address);
                 aarcModal.openModal();
             } catch (error) {
                 console.error('Error opening Aarc modal:', error);
@@ -52,16 +44,10 @@ const DynamicAarcApp = ({ isDark, logoLight, logoDark, aarcModal }: Props) => {
                         />
                         <img
                             className="h-6 w-auto"
-                            src="/dynamicLogo.svg"
-                            alt="Dynamic Logo"
+                            src="/turnkeylogo.ico"
+                            alt="Turnkey Logo"
                         />
                     </div>
-                    {/* <div
-                        onClick={onThemeToggle}
-                        className="w-10 h-10"
-                    >
-                        <img src="/dark_mode.svg" alt="Theme toggle" />
-                    </div> */}
                 </div>
             </header>
 
@@ -70,14 +56,7 @@ const DynamicAarcApp = ({ isDark, logoLight, logoDark, aarcModal }: Props) => {
 
                     {!isLoggedIn && (
                         <>
-                            <button className="login-signup-button" onClick={() => setShowAuthFlow(true)}>
-                                <div className="placeholder-icon" />
-                                <div className="text-container">
-                                    <span>Login or Signup</span>
-                                </div>
-                                <div className="chevron-right-icon" />
-                                <div className="arrow-narrow-icon" />
-                            </button>
+                            <Auth {...auth} />
                             <div className="mt-2 flex items-center justify-center space-x-0.5 text-aarc-text">
                                 <span className="font-semibold text-[10.94px] leading-none">Powered by</span>
                                 <img
@@ -91,9 +70,9 @@ const DynamicAarcApp = ({ isDark, logoLight, logoDark, aarcModal }: Props) => {
                             </div>
                         </>
                     )}
-                    {isLoggedIn && primaryWallet && (
+                    {isLoggedIn && (
                         <>
-                            <DynamicWidget />
+                            <Auth {...auth} />
                             <button
                                 onClick={handleFundWallet}
                                 className="w-full mt-4 py-3 px-4 bg-aarc-primary text-aarc-button-text font-medium rounded-[42px] hover:bg-opacity-90 transition-colors"
@@ -119,4 +98,4 @@ const DynamicAarcApp = ({ isDark, logoLight, logoDark, aarcModal }: Props) => {
     );
 };
 
-export default DynamicAarcApp;
+export default TurnkeyAarcApp;
