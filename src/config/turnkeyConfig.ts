@@ -7,13 +7,13 @@ export const auth = {
     authConfig: {
         emailEnabled: true,
         passkeyEnabled: false,
-        phoneEnabled: false,
+        phoneEnabled: true,
         appleEnabled: false,
         facebookEnabled: false,
-        googleEnabled: true,
+        googleEnabled: false,
         walletEnabled: false,
     },
-    configOrder: ["email", "google"],
+    configOrder: ["email", "phone"],
     onError: (error: any) => {
         console.error('Auth error:', error);
     },

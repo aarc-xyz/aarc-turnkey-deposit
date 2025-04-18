@@ -1,6 +1,7 @@
 import { AarcFundKitModal } from "@aarc-xyz/fundkit-web-sdk";
 import "../index.css";
 import "../styles/auth.css";
+import '../styles/otp.css';
 import { Auth, useTurnkey } from "@turnkey/sdk-react";
 import { auth } from "../config/turnkeyConfig";
 import { useEffect, useState } from "react";

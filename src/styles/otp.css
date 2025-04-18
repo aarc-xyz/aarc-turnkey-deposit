@@ -1,0 +1,91 @@
+/* OTP Verification Card Styles */
+.OtpVerification-module_verification__UNZGW {
+    background: #2D2D2D !important;
+    border-radius: 24px !important;
+    padding: 2rem !important;
+    position: relative !important;
+    width: 100% !important;
+    max-width: 400px !important;
+    margin: 0 auto !important;
+    height: auto !important;
+}
+
+.OtpVerification-module_verification__UNZGW::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -1px !important;
+    right: -1px !important;
+    bottom: -1px !important;
+    left: -1px !important;
+    padding: 1px !important;
+    border-radius: 24px !important;
+    background: linear-gradient(145.73deg, rgba(165, 229, 71, 0.3) 0%, rgba(128, 26, 229, 0.3) 20%, rgba(165, 229, 71, 0.3) 80%, rgba(128, 26, 229, 0.3) 100%) !important;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0) !important;
+    -webkit-mask-composite: xor !important;
+    mask-composite: exclude !important;
+    pointer-events: none !important;
+}
+
+/* Content Wrapper Styles */
+.OtpVerification-module_contentWrapper__o-vmh {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+/* Verification Icon Styles */
+.OtpVerification-module_verificationIcon__sWBFM {
+    color: #A5E547 !important;
+}
+
+/* Verification Text Styles */
+.OtpVerification-module_verificationText__IO4mh {
+    color: #C3C3C3 !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 1rem !important;
+}
+
+.OtpVerification-module_verificationBold__N-x6Y {
+    color: #A5E547 !important;
+    font-weight: 600 !important;
+}
+
+/* OTP Input Wrapper Styles */
+.OtpVerification-module_otpInputWrapper__7tEtZ {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+.MuiOutlinedInput-notchedOutline {
+    border-color: rgba(165, 229, 71, 0.3) !important;
+}
+
+/* Error Text Styles */
+.OtpVerification-module_errorText__uLh42 {
+    color: #FF4D4D !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.875rem !important;
+}
+
+/* Resend Code Styles */
+.OtpVerification-module_resendCode__CuPYx {
+    color: #C3C3C3 !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.875rem !important;
+}
+
+.OtpVerification-module_resendCodeBold__4-Wjs {
+    color: #A5E547 !important;
+    cursor: pointer !important;
+    font-weight: 600 !important;
+}
+
+.css-1ua6bvt-MuiSvgIcon-root {
+    color: #A5E547 !important;
+}
+
+.OtpVerification-module_resendCodeBold__4-Wjs:hover {
+    text-decoration: underline !important;
+}
